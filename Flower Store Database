@@ -1,0 +1,18 @@
+CREATE TABLE items_for_sale (id INTEGER PRIMARY KEY, name TEXT, amount INTEGER, price INTEGER, season TEXT);
+INSERT INTO items_for_sale VALUES (1, "ROSES", 12, 20, "Summer");
+INSERT INTO items_for_sale VALUES (2, "DAISIES", 30, 10, "Spring");
+INSERT INTO items_for_sale VALUES (3, "LILIES", 2, 35, "spring");
+INSERT INTO items_for_sale VALUES (4, "POPPIES", 67, 3, "Summer");
+INSERT INTO items_for_sale VALUES (5, "TIGER LILIES", 7, 90, "Summer");
+INSERT INTO items_for_sale VALUES (6, "Geranium", 3, 40, "Summer");
+INSERT INTO items_for_sale VALUES (7, "Hybiscus", 9, 32, "Summer");
+INSERT INTO items_for_sale VALUES (8, "Sunflower", 81, 10, "Summer");
+INSERT INTO items_for_sale VALUES (9, "Truffle", 2, 24, "Fall");
+INSERT INTO items_for_sale VALUES (10, "Apricot", 131, 2.30, "Summer");
+INSERT INTO items_for_sale VALUES (11, "GRAPES", 80, 31, "Summer");
+INSERT INTO items_for_sale VALUES (12, "PEARS", 12, 25, "Spring");
+INSERT INTO items_for_sale VALUES (13, "APPLES", 78, 3.75, "Fall");
+INSERT INTO items_for_sale VALUES (14, "ORANGES", 3, 4, "Summer");
+INSERT INTO items_for_sale VALUES (15, "CLEMENTINES", 193, 1, "Summer");
+SELECT price FROM items_for_sale ORDER BY price;
+SELECT SUM(amount) FROM items_for_sale;
