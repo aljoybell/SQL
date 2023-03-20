@@ -1,0 +1,57 @@
+/*# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I performed analytics on the data using SQL. 
+#Creating the table: 
+
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+/*#Then I inserted the Spotify Data .csv into the table.
+#Next, I explored the data using the following SQL. */
+
+SELECT * FROM BIT_DB.Spotifydata;
+
+/* #1. Who are the top 10 artists based on popularity? */ 
+SELECT artist_name, popularity FROM BIT_DB.Spotifydata 
+ORDER BY popularity desc
+LIMIT 10;
+
+/* #2. What was the liveliest song of 2021 and what was its artist and popularity?*/
+SELECT track_name, artist_name, popularity FROM BIT_DB.Spotifydata
+ORDER BY liveness desc LIMIT 1;
+
+/* #3. Which songs had over the average loudness?*/
+SELECT track_name, loudness FROM BIT_DB.Spotifydata 
+WHERE loudness > (SELECT AVG(loudness) FROM BIT_DB.Spotifydata)
+ORDER BY loudness desc;
+
+/* #4. Which Artist had the loudest song and what was the song?*/
+SELECT track_name, artist_name FROM BIT_DB.Spotifydata 
+WHERE loudness > (SELECT AVG(loudness) FROM BIT_DB.Spotifydata)
+ORDER BY loudness desc LIMIT 1;
+
+/* #5. What was the average danceability for the five most popular songs?*/
+SELECT AVG(danceability) as danceability FROM BIT_DB.Spotifydata 
+WHERE (SELECT popularity FROM BIT_DB.Spotifydata ORDER BY popularity desc LIMIT 5);
+
+/* #6. Which songs did not use a 4 time signature?*/
+SELECT track_name, artist_name, time_signature, popularity FROM BIT_DB.Spotifydata
+WHERE time_signature <> 4;
