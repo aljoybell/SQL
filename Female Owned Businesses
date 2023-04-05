@@ -1,0 +1,27 @@
+CREATE TABLE Female_Run_Businesses (id INTEGER PRIMARY KEY, Business_Name TEXT,
+Business_Type TEXT, Address TEXT, Zipcode INTEGER, 
+Additional_Info TEXT);
+
+SELECT * FROM Female_Run_Businesses;
+
+/* How many female run businesses are in this data set? Be sure to not count the same company more than once*/
+SELECT COUNT(distinct Business_Name) FROM Female_Run_Businesses;
+
+/*Which of the female run business are also Minority owned?*/
+
+SELECT Business_Name FROM Female_Run_Businesses
+WHERE Additional_Info LIKE '%Minority%';
+
+/*Which of the female run businesses are both minority and immigrant owned, and what kinds of products do they sell?*/
+
+SELECT Business_Name, Business_Type FROM Female_Run_Businesses
+WHERE Additional_Info LIKE '%Minority%'
+AND Additional_Info LIKE '%Immigrant%';
+
+/*What are the top five business type are the majority of the female businesses surveyed?*/
+
+SELECT Business_Type, COUNT(distinct Business_Name) As "Count" FROM Female_Run_Businesses
+GROUP BY Business_Type
+ORDER BY Count(Distinct Business_Name) desc 
+LIMIT 5;
+
