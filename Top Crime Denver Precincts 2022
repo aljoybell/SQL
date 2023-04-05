@@ -1,0 +1,45 @@
+CREATE TABLE Denver_Crime (Indicident_id INTEGER PRIMARY KEY, Offence_Code INTEGER, Offence_Code_Extension INTEGER, 
+Offence_Type_ID INTEGER, Offense_Category_Id INTEGER, First_Occurence INTEGER, Last_Occurence_Date INTEGER, Reported_Date INTEGER,  
+Incident_Address TEXT, District_Id INTEGER, PRECINCT_Id INTEGER, Neighborhood_Id TEXT, Victim_Count INTEGER);
+
+CREATE TABLE Denver_Crime_Codes (ID INTEGER PRIMARY KEY, Offense_Code INTEGER, Offense_Code_Extension INTEGER, 
+Offense_Type_Id INTEGER, Offense_Type_Name TEXT, Offense_Category_Id INTEGER, Offense_Category_Name TEXT);
+
+SELECT * FROM Denver_Crime_Codes;
+SELECT * FROM Denver_Crime;
+
+ALTER TABLE Denver_Crime RENAME COLUMN Indicident_id to Incident_Id;
+
+/*Which precincts had the most incidents in 2022?*/
+
+SELECT COUNT(Incident_Id), Precinct_Id FROM Denver_Crime
+GROUP BY Precinct_ID
+ORDER BY COUNT(Incident_ID) desc LIMIT 10;
+
+/*What how many of each offence did each precinct experience?*/
+
+SELECT COUNT(c.Offense_Category_Id), c.Offense_Category_Id, d.Precinct_Id FROM BIT_DB.Denver_Crime_Codes c
+LEFT JOIN BIT_DB.Denver_Crime d
+ON d.Offence_Code = c.Offense_Code
+WHERE d.Precinct_Id <> "Null"
+GROUP BY d.Precinct_Id
+ORDER BY d.Precinct_Id;
+
+/*Which neighborhoods experienced the most crime and what precinct overlooks them? We want the top 20 neighborhoods.*/
+
+SELECT Neighborhood_id, COUNT(Incident_Id) as 'Total Crime Incidents', Precinct_Id FROM Denver_Crime
+GROUP BY Neighborhood_id
+ORDER BY COUNT(Incident_Id) desc LIMIT 20;
+
+/*Which specific neighborhood experienced the most crime in 2022?*/
+
+SELECT Neighborhood_Id, COUNT(Incident_Id) AS 'Incident Count' FROM Denver_Crime
+GROUP BY Neighborhood_Id
+ORDER BY COUNT(Incident_Id) desc LIMIT 1; 
+
+/*What precinct is overlooking this neighborhood, and what crimes should they pay close attention to?*/
+
+SELECT Neighborhood_Id, Precinct_Id, Offense_Category_Id FROM Denver_Crime
+WHERE Neighborhood_Id = "five-points"
+GROUP BY Offense_Category_ID; 
+
